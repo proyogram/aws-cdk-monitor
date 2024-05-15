@@ -1,4 +1,4 @@
-# How to start
+# When you start
 
 ## Install node_modules!
 
