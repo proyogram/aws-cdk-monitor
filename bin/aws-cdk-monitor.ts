@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { CwAlarmStack } from '../lib/cw_alarm/main';
+import { CwAlarmStack } from '../lib';
 
 const app = new cdk.App();
 
-const test = new CwAlarmStack(app, 'CwAlarmStack');
+new CwAlarmStack(app, 'CwAlarmStack');

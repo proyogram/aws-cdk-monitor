@@ -4,7 +4,7 @@ import * as cw from 'aws-cdk-lib/aws-cloudwatch';
 import * as cw_actions from 'aws-cdk-lib/aws-cloudwatch-actions';
 import * as sns from 'aws-cdk-lib/aws-sns';
 import { CwAlarmMetricsProps } from '../interface';
-import { defineComparisonOperatorFromString, defineTreatMissingDataFromString } from '../utils/utils';
+import { defineComparisonOperatorFromString, defineTreatMissingDataFromString } from '../utils';
 
 export class CwConstruct extends Construct {
   constructor(scope: Construct, id: string, cwProps: Array<CwAlarmMetricsProps>, alarmTopic: sns.Topic) {
