@@ -10,7 +10,7 @@ export interface SnsSubscriptionProps {
   props?: sns_sub.EmailSubscriptionProps;
 }
 
-export interface SnsForCwAlarmProps {
+export interface SnsProps {
   topicProps: SnsTopicProps;
   subscriptionProps: SnsSubscriptionProps;
 }

@@ -40,7 +40,7 @@ export interface AlarmProps {
   treatMissingDataString?: "BREACHING" | "NOT_BREACHING" | "IGNORE" | "MISSING";
 }
 
-export interface CwProps {
+export interface CwAlarmMetricsProps {
   alarmProps: AlarmProps;
   metricPropsList: Array<MetricProps>;
   dimensionsMapList?: Array<{ [key: string]: any }>;

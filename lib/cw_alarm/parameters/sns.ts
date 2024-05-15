@@ -1,6 +1,6 @@
-import { SnsForCwAlarmProps } from "../interface/sns";
+import { SnsProps } from "../interface";
 
-export const snsForCwAlarmProps: SnsForCwAlarmProps = {
+export const snsProps: SnsProps = {
   topicProps: {
     topicName: "cw-alarm-topic",
   },

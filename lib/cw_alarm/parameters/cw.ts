@@ -1,6 +1,6 @@
-import { CwProps } from "../interface/cw";
+import { CwAlarmMetricsProps } from "../interface";
 
-export const cwPropsList: Array<CwProps> = [
+export const cwProps: Array<CwAlarmMetricsProps> = [
   {
     dimensionsMapList: [
       {
