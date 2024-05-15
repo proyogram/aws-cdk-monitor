@@ -1,10 +1,10 @@
-import { SnsProps } from "../interface";
+import { SnsProps } from '../interface';
 
 export const snsProps: SnsProps = {
   topicProps: {
-    topicName: "cw-alarm-topic",
+    topicName: 'cw-alarm-topic',
   },
   subscriptionProps: {
-    emailAddresses: ["aaa@gmai.com", "bbb@gmai.com"],
+    emailAddresses: ['aaa@gmai.com', 'bbb@gmai.com'],
   },
 };

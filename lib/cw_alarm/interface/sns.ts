@@ -1,5 +1,5 @@
-import * as sns from "aws-cdk-lib/aws-sns";
-import * as sns_sub from "aws-cdk-lib/aws-sns-subscriptions";
+import * as sns from 'aws-cdk-lib/aws-sns';
+import * as sns_sub from 'aws-cdk-lib/aws-sns-subscriptions';
 
 export interface SnsTopicProps extends sns.TopicProps {
   topicName: string;

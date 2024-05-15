@@ -1,4 +1,4 @@
-import * as cw from "aws-cdk-lib/aws-cloudwatch";
+import * as cw from 'aws-cdk-lib/aws-cloudwatch';
 
 export interface MetricProps extends cw.MetricProps {
   namespace: string;
@@ -29,15 +29,15 @@ export interface AlarmProps {
   evaluateLowSampleCountPercentile?: string;
   comparisonOperator?: cw.ComparisonOperator;
   comparisonOperatorString?:
-    | "GREATER_OR_EQUAL"
-    | "GREATER"
-    | "LESS_OR_EQUAL"
-    | "LESS"
-    | "LESS_LOWER_OR_GREATER_UPPER"
-    | "GREATER_UPPER"
-    | "LESS_LOWER";
+    | 'GREATER_OR_EQUAL'
+    | 'GREATER'
+    | 'LESS_OR_EQUAL'
+    | 'LESS'
+    | 'LESS_LOWER_OR_GREATER_UPPER'
+    | 'GREATER_UPPER'
+    | 'LESS_LOWER';
   treatMissingData?: cw.TreatMissingData;
-  treatMissingDataString?: "BREACHING" | "NOT_BREACHING" | "IGNORE" | "MISSING";
+  treatMissingDataString?: 'BREACHING' | 'NOT_BREACHING' | 'IGNORE' | 'MISSING';
 }
 
 export interface CwAlarmMetricsProps {

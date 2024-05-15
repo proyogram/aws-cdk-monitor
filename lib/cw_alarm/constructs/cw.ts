@@ -1,28 +1,21 @@
-import * as cdk from "aws-cdk-lib";
-import { Construct } from "constructs";
-import * as cw from "aws-cdk-lib/aws-cloudwatch";
-import * as cw_actions from "aws-cdk-lib/aws-cloudwatch-actions";
-import * as sns from "aws-cdk-lib/aws-sns";
-import { CwAlarmMetricsProps } from "../interface";
-import {
-  defineComparisonOperatorFromString,
-  defineTreatMissingDataFromString,
-} from "../utils/utils";
+import * as cdk from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+import * as cw from 'aws-cdk-lib/aws-cloudwatch';
+import * as cw_actions from 'aws-cdk-lib/aws-cloudwatch-actions';
+import * as sns from 'aws-cdk-lib/aws-sns';
+import { CwAlarmMetricsProps } from '../interface';
+import { defineComparisonOperatorFromString, defineTreatMissingDataFromString } from '../utils/utils';
 
 export class CwConstruct extends Construct {
   constructor(scope: Construct, id: string, cwProps: Array<CwAlarmMetricsProps>, alarmTopic: sns.Topic) {
     super(scope, id);
 
     // Create Metrics and Alarm Props
-    const alarmPropsList = new CreateAlarmPropsMetricsConstruct(
-      this,
-      "CreateAlarmPropsMetricsConstruct",
-      cwProps
-    ).alarmPropsList;
+    const alarmPropsList = new CreateAlarmPropsMetricsConstruct(this, 'CreateAlarmPropsMetricsConstruct', cwProps).alarmPropsList;
 
     // Create Alarms
     for (const alarmProps of alarmPropsList) {
-      const alarmId = "CwAlarm0" + alarmPropsList.indexOf(alarmProps);
+      const alarmId = 'CwAlarm0' + alarmPropsList.indexOf(alarmProps);
       const alarm = new cw.Alarm(this, alarmId, alarmProps);
       alarm.addAlarmAction(new cw_actions.SnsAction(alarmTopic));
     }
@@ -41,25 +34,13 @@ export class CreateAlarmPropsMetricsConstruct extends Construct {
       if (cwAlarmMetricsProps.dimensionsMapList !== undefined) {
         for (const dimensionsMap of cwAlarmMetricsProps.dimensionsMapList) {
           const metricIdFirst =
-            "CreateMetricsConstructFirst0" +
-            cwProps.indexOf(cwAlarmMetricsProps) +
-            cwAlarmMetricsProps.dimensionsMapList.indexOf(dimensionsMap);
-          const createdAlarmProps = new CreateMetricsConstruct(
-            this,
-            metricIdFirst,
-            cwAlarmMetricsProps,
-            dimensionsMap,
-          ).createdAlarmProps;
+            'CreateMetricsConstructFirst0' + cwProps.indexOf(cwAlarmMetricsProps) + cwAlarmMetricsProps.dimensionsMapList.indexOf(dimensionsMap);
+          const createdAlarmProps = new CreateMetricsConstruct(this, metricIdFirst, cwAlarmMetricsProps, dimensionsMap).createdAlarmProps;
           createdAlarmPropsList.push(createdAlarmProps);
         }
       } else {
-        const metricIdSecond =
-          "CreateMetricsConstructSecond0" + cwProps.indexOf(cwAlarmMetricsProps);
-        const createdAlarmProps = new CreateMetricsConstruct(
-          this,
-          metricIdSecond,
-          cwAlarmMetricsProps,
-        ).createdAlarmProps;
+        const metricIdSecond = 'CreateMetricsConstructSecond0' + cwProps.indexOf(cwAlarmMetricsProps);
+        const createdAlarmProps = new CreateMetricsConstruct(this, metricIdSecond, cwAlarmMetricsProps).createdAlarmProps;
         createdAlarmPropsList.push(createdAlarmProps);
       }
     }
@@ -71,12 +52,7 @@ export class CreateAlarmPropsMetricsConstruct extends Construct {
 // Create Metrics
 export class CreateMetricsConstruct extends Construct {
   public readonly createdAlarmProps: cw.AlarmProps;
-  constructor(
-    scope: Construct,
-    id: string,
-    cwAlarmMetricsProps: CwAlarmMetricsProps,
-    dimensionsMap?: { [key: string]: any },
-  ) {
+  constructor(scope: Construct, id: string, cwAlarmMetricsProps: CwAlarmMetricsProps, dimensionsMap?: { [key: string]: any }) {
     super(scope, id);
 
     const usingMetrics: { [key: string]: cw.IMetric } = {};
@@ -86,13 +62,8 @@ export class CreateMetricsConstruct extends Construct {
     // Create Metrics
     for (const metricProps of cwAlarmMetricsProps.metricPropsList) {
       // Error when you use both dimensionsMapList and dimensionMap in metricPrps
-      if (
-        dimensionsMap !== undefined &&
-        metricProps.dimensionsMap !== undefined
-      ) {
-        throw new Error(
-          `Cannot use both dimensionsMapList and dimensionMap in metricProps!`,
-        );
+      if (dimensionsMap !== undefined && metricProps.dimensionsMap !== undefined) {
+        throw new Error(`Cannot use both dimensionsMapList and dimensionMap in metricProps!`);
       }
 
       // Create Metric
@@ -114,8 +85,7 @@ export class CreateMetricsConstruct extends Construct {
     if (cwAlarmMetricsProps.MathExpressionProps !== undefined) {
       // When MathMetric
       createdMetric = new cw.MathExpression({
-        expression:
-          cwAlarmMetricsProps.MathExpressionProps.expressionByMetrics.toLowerCase(),
+        expression: cwAlarmMetricsProps.MathExpressionProps.expressionByMetrics.toLowerCase(),
         period: cdk.Duration.seconds(cwAlarmMetricsProps.MathExpressionProps.periodSeconds),
         usingMetrics: usingMetrics,
         ...cwAlarmMetricsProps.MathExpressionProps,
@@ -129,23 +99,18 @@ export class CreateMetricsConstruct extends Construct {
 
     // Change type from String to cloudwatch.ComparisonOperator
     if (cwAlarmMetricsProps.alarmProps.comparisonOperatorString !== undefined) {
-      cwAlarmMetricsProps.alarmProps.comparisonOperator =
-        defineComparisonOperatorFromString(
-          cwAlarmMetricsProps.alarmProps.comparisonOperatorString,
-        );
+      cwAlarmMetricsProps.alarmProps.comparisonOperator = defineComparisonOperatorFromString(cwAlarmMetricsProps.alarmProps.comparisonOperatorString);
     }
     // Change type from String to cloudwatch.TreatMissingData
     if (cwAlarmMetricsProps.alarmProps.treatMissingDataString !== undefined) {
-      cwAlarmMetricsProps.alarmProps.treatMissingData = defineTreatMissingDataFromString(
-        cwAlarmMetricsProps.alarmProps.treatMissingDataString,
-      );
+      cwAlarmMetricsProps.alarmProps.treatMissingData = defineTreatMissingDataFromString(cwAlarmMetricsProps.alarmProps.treatMissingDataString);
     }
 
     // Define AlarmName
     let alarmName: string = cwAlarmMetricsProps.alarmProps.alarmNamePrefix;
     if (dimensionsMap !== undefined) {
       for (const dimension of Object.values(dimensionsMap)) {
-        alarmName += "-" + dimension;
+        alarmName += '-' + dimension;
       }
     }
 
