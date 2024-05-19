@@ -5,6 +5,6 @@ export const snsProps: SnsProps = {
     topicName: 'cw-alarm-topic',
   },
   subscriptionProps: {
-    emailAddresses: ['aaa@gmai.com', 'bbb@gmai.com'],
+    emailAddresses: ['aaa@gmail.com', 'bbb@gmail.com'],
   },
 };
