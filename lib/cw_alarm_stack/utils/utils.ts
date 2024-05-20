@@ -28,6 +28,6 @@ export function defineTreatMissingDataFromString(treatMissingDataString: string)
     return cw.TreatMissingData.IGNORE;
   } else {
     //treatMissingDataString === "MISSING"
-    return cw.TreatMissingData.IGNORE;
+    return cw.TreatMissingData.MISSING;
   }
 }
